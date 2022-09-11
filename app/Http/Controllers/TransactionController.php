@@ -160,4 +160,42 @@ class TransactionController extends Controller
             ]);
         }
     }
+
+    public function expense()
+    {
+        $expense = Transaction::where('type', 'expense')->sum('amount');
+
+        $response = [
+            'message' => 'Total Expenses',
+            'data' => $expense
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function revenue()
+    {
+        $revenue = Transaction::where('type', 'revenue')->sum('amount');
+
+        $response = [
+            'message' => 'Total Expenses',
+            'data' => $revenue
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function balance()
+    {
+        $expense = Transaction::where('type', 'expense')->sum('amount');
+        $revenue = Transaction::where('type', 'revenue')->sum('amount');
+        $balance = $revenue - $expense;
+
+        $response = [
+            'message' => 'Total Expenses',
+            'data' => $balance
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
 }
